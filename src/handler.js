@@ -2,19 +2,14 @@ const { nanoid } = require('nanoid');
 const notes = require('./notes');
 
 const addNoteHandler = (request, h) => {
-  const { title, tags, body } = request.payload;
+  const { title = 'untitled', tags, body } = request.payload;
 
   const id = nanoid(16);
   const createdAt = new Date().toISOString();
   const updatedAt = createdAt;
 
   const newNote = {
-    title,
-    tags,
-    body,
-    id,
-    createdAt,
-    updatedAt,
+    title, tags, body, id, createdAt, updatedAt,
   };
 
   notes.push(newNote);
@@ -30,11 +25,9 @@ const addNoteHandler = (request, h) => {
       },
     });
     response.code(201);
-
-    response.header('Access-Control-Allow-Origin', 'http://notesapp-v1.dicodingacademy.com');
-
     return response;
   }
+
   const response = h.response({
     status: 'fail',
     message: 'Catatan gagal ditambahkan',
@@ -121,12 +114,13 @@ const deleteNoteByIdHandler = (request, h) => {
   }
 
   const response = h.response({
-    statusbar: 'fail',
-    message: 'catatan gagal di hapus, id tidak di temukan',
+    status: 'fail',
+    message: 'Catatan gagal dihapus. Id tidak ditemukan',
   });
-  response.code(400);
+  response.code(404);
   return response;
 };
+
 module.exports = {
   addNoteHandler,
   getAllNotesHandler,
