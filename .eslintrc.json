@@ -13,6 +13,7 @@
     "no-console": "off",
     "no-underscore-dangle": "off",
     "max-len": "off", 
-    "import/no-extraneous-dependencies": "off"
+    "import/no-extraneous-dependencies": "off",
+    
   }
 }
